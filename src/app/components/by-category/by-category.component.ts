@@ -120,7 +120,7 @@ export class ByCategoryComponent implements OnInit {
       if (data == null) {
         this.customerService.getByEmail(email).subscribe(data => {
           this.customer = data as Customer;
-          this.favoriteService.post(new Favorites(0, new Customer(this.customer.userId), new Product(id))).subscribe(data => {
+          this.favoriteService.post(new Favorites(new Customer(this.customer.userId), new Product(id))).subscribe(data => {
             this.toastr.success('Thêm thành công!', 'Hệ thống');
             this.favoriteService.getByEmail(email).subscribe(data => {
               this.favorites = data as Favorites[];
