@@ -25,11 +25,11 @@ export class CartService {
     return this.httpClient.get(this.urlCartDetail+'/cart/'+cartId);
   }
 
-  getOneDetail(detailId:number) {
+  getCartDetailById(detailId:number) {
     return this.httpClient.get(this.urlCartDetail+'/'+detailId);
   }
 
-  getCart(email: string) {
+  getCartByUser(email: string) {
     return this.httpClient.get(this.urlCart+'/user/'+email);
   }
 

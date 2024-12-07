@@ -45,7 +45,7 @@ export class CartComponent implements OnInit {
 
   getAllItem() {
     let email = this.sessionService.getUser();
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
       this.cartService.getAllDetail(this.cart.cartId).subscribe(data => {
         this.cartDetails = data as CartDetail[];
@@ -63,10 +63,11 @@ export class CartComponent implements OnInit {
     if (quantity < 1) {
       this.delete(id);
     } else {
-      this.cartService.getOneDetail(id).subscribe(data => {
+      this.cartService.getCartDetailById(id).subscribe(data => {
         this.cartDetail = data as CartDetail;
         this.cartDetail.quantity = quantity;
         this.cartDetail.price = (this.cartDetail.product.price * (1 - this.cartDetail.product.discount / 100)) * quantity;
+        debugger
         this.cartService.updateDetail(this.cartDetail).subscribe(data => {
           this.ngOnInit();
         }, error => {

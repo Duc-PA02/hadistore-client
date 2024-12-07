@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit {
 
   getAllItem() {
     let email = this.sessionService.getUser();
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
       this.postForm = new FormGroup({
         'phone': new FormControl(this.cart.phone, [Validators.required, Validators.pattern('(0)[0-9]{9}')]),
@@ -126,7 +126,7 @@ export class CheckoutComponent implements OnInit {
         confirmButtonText: 'Đặt'
       }).then((result) => {
         let email = this.sessionService.getUser();
-        this.cartService.getCart(email).subscribe(data => {
+        this.cartService.getCartByUser(email).subscribe(data => {
           this.cart = data as Cart;
           this.cart.address = this.postForm.value.number + ', ' + this.ward.name + ', ' + this.district.name + ', ' + this.province.name;
           this.cart.phone = this.postForm.value.phone;
