@@ -20,7 +20,7 @@ export class FavoritesService {
   }
 
   post(favorites: Favorites) {
-    return this.httpClient.post(this.url+'/email', favorites);
+    return this.httpClient.post(this.url, favorites);
   }
 
   getByEmail(email : string) {

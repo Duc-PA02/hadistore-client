@@ -9,8 +9,8 @@ import { CartDetail } from '../common/CartDetail';
 })
 export class CartService {
 
-  urlCart = 'http://localhost:8080/api/cart';
-  urlCartDetail = 'http://localhost:8080/api/cartDetail';
+  urlCart = 'http://localhost:8080/api/v1/cart';
+  urlCartDetail = 'http://localhost:8080/api/v1/cart-detail';
 
   constructor(private httpClient: HttpClient) { }
 
