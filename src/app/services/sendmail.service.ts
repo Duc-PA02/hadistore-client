@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class SendmailService {
 
-  url = 'http://localhost:8080/api/send-mail'
+  url = 'http://localhost:8080/api/v1/send-mail'
 
   constructor(private httpClient: HttpClient) { }
 

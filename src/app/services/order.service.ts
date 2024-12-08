@@ -7,9 +7,9 @@ import { Cart } from '../common/Cart';
 })
 export class OrderService {
 
-  url = "http://localhost:8080/api/orders";
+  url = "http://localhost:8080/api/v1/orders";
 
-  urlOrderDetail = "http://localhost:8080/api/orderDetail";
+  urlOrderDetail = "http://localhost:8080/api/v1/orderDetail";
 
   constructor(private httpClient: HttpClient) { }
 

@@ -47,12 +47,11 @@ export class SignFormComponent implements OnInit {
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'name': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'status': new FormControl(true),
-      'gender': new FormControl(true),
-      'avatar': new FormControl('https://res.cloudinary.com/veggie-shop/image/upload/v1633795994/users/mnoryxp056ohm0b4gcrj.png'),
+      'gender': new FormControl(true, [Validators.required]),
+      'image': new FormControl('https://res.cloudinary.com/veggie-shop/image/upload/v1633795994/users/mnoryxp056ohm0b4gcrj.png'),
       'address': new FormControl(null, [Validators.required]),
       'phone': new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('(0)[0-9]{9}')]),
       'registerDate': new FormControl(new Date()),
-      'role': new FormControl(["USER"]),
       'otp': new FormControl(null, [Validators.required, Validators.minLength(6)])
     });
   }
@@ -80,7 +79,7 @@ export class SignFormComponent implements OnInit {
           timer: 1500
         })
         setTimeout(() => {
-          window.location.href = ('/');
+          this.router.navigate(['/home']);
         },
           500);
       }, error => {
@@ -182,7 +181,6 @@ export class SignFormComponent implements OnInit {
         this.toastr.warning('Hãy nhập đúng email !', 'Hệ thống');
       }
     });
-
   }
 
   checkLogin() {
