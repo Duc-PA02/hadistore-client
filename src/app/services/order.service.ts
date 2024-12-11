@@ -9,7 +9,7 @@ export class OrderService {
 
   url = "http://localhost:8080/api/v1/orders";
 
-  urlOrderDetail = "http://localhost:8080/api/v1/orderDetail";
+  urlOrderDetail = "http://localhost:8080/api/v1/order-detail";
 
   constructor(private httpClient: HttpClient) { }
 

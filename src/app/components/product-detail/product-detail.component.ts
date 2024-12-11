@@ -39,7 +39,7 @@ export class ProductDetailComponent implements OnInit {
 
   rates!:Rate[];
   rateAll!:Rate[];
-  countRate!:number;
+  countRate: number = 0;
 
   itemsComment:number = 3;
   
@@ -114,16 +114,23 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getAvgRate(id: number): number {
+    if (!this.rateAll) {
+      return 0;
+    }
+    
     let avgRating: number = 0;
     this.countRate = 0;
+  
     for (const item of this.rateAll) {
-      if (item.product.productId === id) {
+      if (item?.product?.productId === id) {
         avgRating += item.rating;
         this.countRate++;
       }
     }
-    return this.countRate==0 ? 0 : Math.round(avgRating/this.countRate * 10) / 10;
+  
+    return this.countRate === 0 ? 0 : Math.round((avgRating / this.countRate) * 10) / 10;
   }
+  
 
   toggleLike(id: number) {
     let email = this.sessionService.getUser();

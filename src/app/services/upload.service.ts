@@ -13,8 +13,7 @@ export class UploadService {
     const data = new FormData();
     data.append('file', file);
     data.append('upload_preset', 'user-image');
-    data.append('cloud_name', 'martfury');
-    return this.http.post('https://api.cloudinary.com/v1_1/martfury/image/upload', data)
+    data.append('cloud_name', 'dijswy9di');
+    return this.http.post('https://api.cloudinary.com/v1_1/dijswy9di/image/upload', data)
   }
-
 }
