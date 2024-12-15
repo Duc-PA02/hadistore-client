@@ -109,7 +109,7 @@ export class CheckoutComponent implements OnInit {
         })
         this.discount = this.amount - this.amountReal;
 
-        this.amountPaypal = (this.amount/22727.5);
+        this.amountPaypal = (this.amount/25396);
       });
     });
   }
@@ -209,7 +209,7 @@ export class CheckoutComponent implements OnInit {
 
     this.payPalConfig = {
         currency: 'USD',
-        clientId: 'Af5ZEdGAlk3_OOp29nWn8_g717UNbdcbpiPIZOZgSH4Gdneqm_y_KVFiHgrIsKM0a2dhNBfFK8TIuoOG',
+        clientId: 'AffMPbXyh-nuwD3jpRexjRKcPXWv1TsQkqgGbt2tgcJ9XaJf87PhbqXYEmbgtqzlQuuTNHpmslRLH0MD',
         createOrderOnClient: (data) => < ICreateOrderRequest > {
             intent: 'CAPTURE',
             purchase_units: [{

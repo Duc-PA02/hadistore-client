@@ -29,7 +29,9 @@ export class OrderService {
     return this.httpClient.get(this.urlOrderDetail+'/order/'+id);
   }
 
-  cancel(id: number) {
-    return this.httpClient.get(this.url+'/cancel/'+id);
-  }
+  cancel(id: number, status: number) {
+    return this.httpClient.put(`${this.url}/${id}`, null, {
+      params: { status: status.toString() }
+    });
+  }  
 }

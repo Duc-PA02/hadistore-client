@@ -31,7 +31,6 @@ export class SignFormComponent implements OnInit {
 
   constructor(
     private sendMailService: SendmailService,
-    private favoriteService: FavoritesService,
     private sessionService: SessionService,
     private toastr: ToastrService,
     private router: Router,
