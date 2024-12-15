@@ -123,7 +123,7 @@ export class HomepageComponent implements OnInit {
       if (data == null) {
         this.customerService.getByEmail(email).subscribe(data => {
           this.customer = data as Customer;
-          this.favoriteService.post(new Favorites(0, new Customer(this.customer.userId), new Product(id))).subscribe(data => {
+          this.favoriteService.post(new Favorites(new Customer(this.customer.userId), new Product(id))).subscribe(data => {
             this.toastr.success('Thêm thành công!', 'Hệ thống');
             this.favoriteService.getByEmail(email).subscribe(data=>{
               this.favorites = data as Favorites[];
@@ -159,9 +159,9 @@ export class HomepageComponent implements OnInit {
       this.toastr.info('Hãy đăng nhập để sử dụng dịch vụ của chúng tôi', 'Hệ thống');
       return;
     }
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
-      this.cartDetail = new CartDetail(0, 1, price, new Product(productId), new Cart(this.cart.cartId));
+      this.cartDetail = new CartDetail(1, price, new Product(productId), new Cart(this.cart.cartId));
       this.cartService.postDetail(this.cartDetail).subscribe(data => {
         this.toastr.success('Thêm vào giỏ hàng thành công!', 'Hệ thống!');
         this.cartService.getAllDetail(this.cart.cartId).subscribe(data => {

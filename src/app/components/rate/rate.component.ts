@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Customer } from 'src/app/common/Customer';
+import { RateRequest } from 'src/app/common/dto/RateRequest';
 import { OrderDetail } from 'src/app/common/OrderDetail';
 import { Product } from 'src/app/common/Product';
 import { Rate } from 'src/app/common/Rate';
@@ -70,36 +71,37 @@ export class RateComponent implements OnInit {
   rating() {
     let email = this.sesionService.getUser();
     this.customerService.getByEmail(email).subscribe(data => {
-
+      const customer = data as Customer;
+      
+      // Create rateRequest object
+      const rateRequest: RateRequest = {
+        id: this.postForm.value.id,
+        rating: this.star,
+        comment: this.postForm.value.comment,
+        rateDate: new Date(),
+        userId: customer.userId,
+        productId: this.orderDetail.product.productId,
+        orderDetailId: this.orderDetail.orderDetailId
+      };
+  
       if (this.postForm.value.id == 0) {
-        
-        this.rate = this.postForm.value;
-        this.rate.rating = this.star;
-        this.rate.orderDetail = this.orderDetail;
-        this.rate.product = this.orderDetail.product;
-        this.rate.user = data as Customer;
-
-        this.rateService.post(this.rate).subscribe(date => {
+        this.rateService.post(rateRequest).subscribe(date => {
           this.toastr.success('Đánh giá thành công!', 'Hệ thống');
-          // this.modalService.dismissAll();
           this.modalReference.close();
         }, error => {
           this.toastr.error('Lỗi hệ thống!', 'Hệ thống');
-        })
+        });
       } else {
-        this.rate = this.postForm.value;
-        this.rate.rating = this.star;
-        this.rateService.put(this.rate).subscribe(date => {
+        this.rateService.put(rateRequest).subscribe(date => {
           this.toastr.success('Đánh giá thành công!', 'Hệ thống');
-          // this.modalService.dismissAll();
           this.modalReference.close();
         }, error => {
           this.toastr.error('Lỗi hệ thống!', 'Hệ thống');
-        })
+        });
       }
     }, error => {
       this.toastr.error('Lỗi hệ thống!', 'Hệ thống');
-    })
+    });
   }
 
   open(content: TemplateRef<any>) {

@@ -8,8 +8,7 @@ export class CartDetail {
     'product': Product;
     'cart': Cart;
 
-    constructor(id: number, quantity: number, price: number, product: Product, cart: Cart) {
-        this.cartDetailId = id;
+    constructor(quantity: number, price: number, product: Product, cart: Cart) {
         this.quantity = quantity;
         this.price = price;
         this.product = product;

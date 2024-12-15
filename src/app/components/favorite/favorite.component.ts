@@ -78,9 +78,9 @@ export class FavoriteComponent implements OnInit {
       this.toastr.info('Hãy đăng nhập để sử dụng dịch vụ của chúng tôi', 'Hệ thống');
       return;
     }
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
-      this.cartDetail = new CartDetail(0, 1, price, new Product(productId), new Cart(this.cart.cartId));
+      this.cartDetail = new CartDetail(1, price, new Product(productId), new Cart(this.cart.cartId));
       this.cartService.postDetail(this.cartDetail).subscribe(data => {
         this.toastr.success('Thêm vào giỏ hàng thành công!', 'Hệ thống!');
         this.cartService.getAllDetail(this.cart.cartId).subscribe(data => {

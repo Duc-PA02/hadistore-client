@@ -8,7 +8,7 @@ import { Favorites } from '../common/Favorites';
 })
 export class FavoritesService {
 
-  url = 'http://localhost:8080/api/favorites';
+  url = 'http://localhost:8080/api/v1/favorites';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class FavoritesService {
   }
 
   post(favorites: Favorites) {
-    return this.httpClient.post(this.url+'/email', favorites);
+    return this.httpClient.post(this.url, favorites);
   }
 
   getByEmail(email : string) {

@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
     if (email == null) {
       return;
     }
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
       this.cartService.getAllDetail(this.cart.cartId).subscribe(data => {
         this.cartDetails = data as CartDetail[];
@@ -89,6 +89,10 @@ export class HeaderComponent implements OnInit {
 
   checkLogin() {
     let email = this.sessionService.getUser();
+    if (!email) {
+      this.isLogin = false;
+      return;
+    }
     this.customerService.getByEmail(email).subscribe(data => {
       this.isLogin = true;
     }, error => {

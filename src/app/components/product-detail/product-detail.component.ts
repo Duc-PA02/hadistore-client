@@ -39,7 +39,7 @@ export class ProductDetailComponent implements OnInit {
 
   rates!:Rate[];
   rateAll!:Rate[];
-  countRate!:number;
+  countRate: number = 0;
 
   itemsComment:number = 3;
   
@@ -114,16 +114,23 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getAvgRate(id: number): number {
+    if (!this.rateAll) {
+      return 0;
+    }
+    
     let avgRating: number = 0;
     this.countRate = 0;
+  
     for (const item of this.rateAll) {
-      if (item.product.productId === id) {
+      if (item?.product?.productId === id) {
         avgRating += item.rating;
         this.countRate++;
       }
     }
-    return this.countRate==0 ? 0 : Math.round(avgRating/this.countRate * 10) / 10;
+  
+    return this.countRate === 0 ? 0 : Math.round((avgRating / this.countRate) * 10) / 10;
   }
+  
 
   toggleLike(id: number) {
     let email = this.sessionService.getUser();
@@ -132,40 +139,47 @@ export class ProductDetailComponent implements OnInit {
       this.toastr.info('Hãy đăng nhập để sử dụng dịch vụ của chúng tôi', 'Hệ thống');
       return;
     }
+    console.log("Email:", email); // Log email người dùng
     this.favoriteService.getByProductIdAndEmail(id, email).subscribe(data => {
+      console.log("Favorite data:", data); // Log kết quả trả về từ API
       if (data == null) {
         this.customerService.getByEmail(email).subscribe(data => {
           this.customer = data as Customer;
-          this.favoriteService.post(new Favorites(0, new Customer(this.customer.userId), new Product(id))).subscribe(data => {
+          console.log("Customer:", this.customer); // Log thông tin khách hàng
+          this.favoriteService.post(new Favorites(new Customer(this.customer.userId), new Product(id))).subscribe(data => {
+            console.log("Post favorite response:", data); // Log phản hồi API thêm yêu thích
             this.toastr.success('Thêm thành công!', 'Hệ thống');
-            this.favoriteService.getByEmail(email).subscribe(data => {
-              this.favorites = data as Favorites[];
-              this.favoriteService.setLength(this.favorites.length);
-              this.getTotalLike();
-            }, error => {
-              this.toastr.error('Lỗi truy xuất dữ liệu!', 'Hệ thống');
-            })
+            this.updateFavorites(email);
           }, error => {
+            console.error("Post favorite error:", error); // Log lỗi nếu thêm thất bại
             this.toastr.error('Thêm thất bại!', 'Hệ thống');
-          })
-        })
+          });
+        });
       } else {
         this.favorite = data as Favorites;
         this.favoriteService.delete(this.favorite.favoriteId).subscribe(data => {
+          console.log("Delete favorite response:", data); // Log phản hồi API xóa yêu thích
           this.toastr.info('Đã xoá ra khỏi danh sách yêu thích!', 'Hệ thống');
-          this.favoriteService.getByEmail(email).subscribe(data => {
-            this.favorites = data as Favorites[];
-            this.favoriteService.setLength(this.favorites.length);
-            this.getTotalLike();
-          }, error => {
-            this.toastr.error('Lỗi truy xuất dữ liệu!', 'Hệ thống');
-          })
+          this.updateFavorites(email);
         }, error => {
+          console.error("Delete favorite error:", error); // Log lỗi nếu xóa thất bại
           this.toastr.error('Lỗi!', 'Hệ thống');
-        })
+        });
       }
-    })
+    });
   }
+  
+  private updateFavorites(email: string) {
+    this.favoriteService.getByEmail(email).subscribe(data => {
+      this.favorites = data as Favorites[];
+      this.favoriteService.setLength(this.favorites.length);
+      this.getTotalLike(); // Cập nhật tổng lượt thích
+    }, error => {
+      console.error("Update favorites error:", error); // Log lỗi nếu truy xuất danh sách yêu thích thất bại
+      this.toastr.error('Lỗi truy xuất dữ liệu!', 'Hệ thống');
+    });
+  }
+  
 
   getTotalLike() {
     this.favoriteService.getByProduct(this.id).subscribe(data => {
@@ -180,9 +194,9 @@ export class ProductDetailComponent implements OnInit {
       this.toastr.info('Hãy đăng nhập để sử dụng dịch vụ của chúng tôi', 'Hệ thống');
       return;
     }
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
-      this.cartDetail = new CartDetail(0, 1, price, new Product(productId), new Cart(this.cart.cartId));
+      this.cartDetail = new CartDetail(1, price, new Product(productId), new Cart(this.cart.cartId));
       this.cartService.postDetail(this.cartDetail).subscribe(data => {
         this.toastr.success('Thêm vào giỏ hàng thành công!', 'Hệ thống!');
         this.cartService.getAllDetail(this.cart.cartId).subscribe(data => {

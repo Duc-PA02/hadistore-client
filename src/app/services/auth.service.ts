@@ -12,7 +12,7 @@ export class AuthService {
 
   url = 'http://localhost:8080/api/v1/';
 
-  constructor(private sessionService: SessionService, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   login(userData: Login): Observable<any> {
     return this.http.post(this.url + 'login', userData);
@@ -22,6 +22,6 @@ export class AuthService {
   }
 
   forgotPassword(email: string) {
-    return this.http.post(this.url + 'send-mail-forgot-password-token', email);
+    return this.http.post(this.url + 'send-mail-forgot-password', email);
   }
 }

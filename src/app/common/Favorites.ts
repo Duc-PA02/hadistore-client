@@ -6,8 +6,7 @@ export class Favorites {
     'user': Customer;
     'product': Product;
 
-    constructor(id: number, user: Customer, product: Product) {
-        this.favoriteId = id;
+    constructor(user: Customer, product: Product) {
         this.product = product;
         this.user = user;
     }

@@ -29,23 +29,27 @@ export class ForgotPasswordComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  submit() {
-    if (this.postForm.valid) {
-      this.userService.forgotPassword(this.postForm.value.email).subscribe(data => {
-        this.toastr.success('Chúng tôi đã gửi 1 đường dẫn đến mail của bạn, hãy kiểm tra!', 'Hệ thống');
-        this.modalService.dismissAll();
-        this.postForm = new FormGroup({
-          'email': new FormControl(null, [Validators.required, Validators.email])
-        })
-      }, error => {
-        if (error.status == 404) {
-          this.toastr.error('Email này chưa đăng kí tài khoản!', 'Hệ thống');
-        } else {
-          this.toastr.error('Lỗi', 'Hệ thống');
-        }
-      })
-    }
-
-  }
-
+  submit() {  
+    if (this.postForm.valid) {  
+      this.userService.forgotPassword(this.postForm.value.email).subscribe(  
+        (response: any) => { 
+          if (response.status === 204) { 
+            debugger
+            this.toastr.success('Chúng tôi đã gửi 1 đường dẫn đến mail của bạn, hãy kiểm tra!', 'Hệ thống');  
+            this.modalService.dismissAll();  
+            this.postForm.reset();
+          } else {  
+            this.toastr.error(response.message || 'Có lỗi xảy ra!', 'Hệ thống');
+          }  
+        },  
+        (error) => {  
+          if (error.status === 404) {  
+            this.toastr.error('Email này chưa đăng kí tài khoản!', 'Hệ thống');  
+          } else {  
+            this.toastr.error('Lỗi', 'Hệ thống');  
+          }  
+        }  
+      );  
+    }  
+  }  
 }

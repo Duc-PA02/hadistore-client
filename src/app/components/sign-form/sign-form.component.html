@@ -123,6 +123,16 @@
                                     type="text"
                                     placeholder="Địa chỉ">
                                 </div>
+                                <div class="form-group">
+                                    <label for="gender">Giới tính</label>
+                                    <select 
+                                        class="form-control" 
+                                        formControlName="gender"
+                                    >
+                                        <option value="true">Nam</option>
+                                        <option value="false">Nữ</option>
+                                    </select>
+                                </div>                                
                                 <div class="form-group submtit">
                                     <button type="submit" (click)="sign_up()" class="ps-btn ps-btn--fullwidth">Đăng ký miễn phí</button>
                                 </div>

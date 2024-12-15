@@ -9,8 +9,8 @@ import { CartDetail } from '../common/CartDetail';
 })
 export class CartService {
 
-  urlCart = 'http://localhost:8080/api/cart';
-  urlCartDetail = 'http://localhost:8080/api/cartDetail';
+  urlCart = 'http://localhost:8080/api/v1/cart';
+  urlCartDetail = 'http://localhost:8080/api/v1/cart-detail';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,11 +25,11 @@ export class CartService {
     return this.httpClient.get(this.urlCartDetail+'/cart/'+cartId);
   }
 
-  getOneDetail(detailId:number) {
+  getCartDetailById(detailId:number) {
     return this.httpClient.get(this.urlCartDetail+'/'+detailId);
   }
 
-  getCart(email: string) {
+  getCartByUser(email: string) {
     return this.httpClient.get(this.urlCart+'/user/'+email);
   }
 

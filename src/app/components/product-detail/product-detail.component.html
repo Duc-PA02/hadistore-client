@@ -75,19 +75,19 @@
                         </ul>
                         <div class="ps-tab active" id="tab-1">
                             <div class="table-responsive">
-                                <p *ngIf="rates.length==0" style="text-decoration: underline;">Sản phẩm này chưa có đánh giá nào.</p>
+                                <p *ngIf="rates?.length === 0" style="text-decoration: underline;">Sản phẩm này chưa có đánh giá nào.</p>
                                 <div class="row">
                                     <div class="col-10">
                                         <table class="table table-bordered ps-table ps-table--specification">
                                             <tbody>
                                                 <tr *ngFor="let item of rates | paginate: { itemsPerPage: itemsComment, currentPage: 1}">
                                                     <td>
-                                                        <a [href]="item.user.image">
-                                                        <img [src]="item.user.image" alt="" /></a>
+                                                        <a [href]="item?.user?.image">
+                                                        <img [src]="item?.user?.image" alt="" /></a>
                                                     </td>
                                                     <td>
                                                         <h5>
-                                                            Họ và Tên: <a>{{item.user.name}}</a><br>
+                                                            Họ và Tên: <a>{{item?.user?.name}}</a><br>
                                                         </h5>
                                                         <h5>
                                                             Ngày: <span>{{item.rateDate|date:'dd-MM-yyyy'}}</span>
@@ -137,7 +137,7 @@
                     <p><i class="icon-credit-card"></i> Thanh toán trực tuyến hoặc khi nhận hàng</p>
                 </aside>
                 <aside class="widget widget_sell-on-site">
-                    <p><i class="icon-store"></i> Bán trên Martfury?<a href="#"> Đăng ký ngay !</a></p>
+                    <p><i class="icon-store"></i> Bán trên HadiStore?<a href="#"> Đăng ký ngay !</a></p>
                 </aside>
                 <aside class="widget widget_ads"><a href="#"><img src="img/ads/product-ads.png" alt=""></a></aside>
             </div>

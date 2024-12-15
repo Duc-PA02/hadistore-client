@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit {
 
   getAllItem() {
     let email = this.sessionService.getUser();
-    this.cartService.getCart(email).subscribe(data => {
+    this.cartService.getCartByUser(email).subscribe(data => {
       this.cart = data as Cart;
       this.postForm = new FormGroup({
         'phone': new FormControl(this.cart.phone, [Validators.required, Validators.pattern('(0)[0-9]{9}')]),
@@ -109,7 +109,7 @@ export class CheckoutComponent implements OnInit {
         })
         this.discount = this.amount - this.amountReal;
 
-        this.amountPaypal = (this.amount/22727.5);
+        this.amountPaypal = (this.amount/25396);
       });
     });
   }
@@ -126,7 +126,7 @@ export class CheckoutComponent implements OnInit {
         confirmButtonText: 'Đặt'
       }).then((result) => {
         let email = this.sessionService.getUser();
-        this.cartService.getCart(email).subscribe(data => {
+        this.cartService.getCartByUser(email).subscribe(data => {
           this.cart = data as Cart;
           this.cart.address = this.postForm.value.number + ', ' + this.ward.name + ', ' + this.district.name + ', ' + this.province.name;
           this.cart.phone = this.postForm.value.phone;
@@ -209,7 +209,7 @@ export class CheckoutComponent implements OnInit {
 
     this.payPalConfig = {
         currency: 'USD',
-        clientId: 'Af5ZEdGAlk3_OOp29nWn8_g717UNbdcbpiPIZOZgSH4Gdneqm_y_KVFiHgrIsKM0a2dhNBfFK8TIuoOG',
+        clientId: 'AffMPbXyh-nuwD3jpRexjRKcPXWv1TsQkqgGbt2tgcJ9XaJf87PhbqXYEmbgtqzlQuuTNHpmslRLH0MD',
         createOrderOnClient: (data) => < ICreateOrderRequest > {
             intent: 'CAPTURE',
             purchase_units: [{

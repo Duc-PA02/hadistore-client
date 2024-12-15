@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
       confirmButtonText: 'Huỷ'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.orderService.cancel(id).subscribe(data => {
+        this.orderService.cancel(id, 3).subscribe(data => {
           this.getOrder();
           this.sendMessage(id);
           this.toastr.success('Huỷ đơn hàng thành công!', 'Hệ thống');
