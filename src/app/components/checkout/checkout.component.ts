@@ -70,7 +70,11 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkOutPaypal();
-    this.webSocketService.openWebSocket();
+    try {
+      this.webSocketService.openWebSocket();
+    } catch (error) {
+      console.error('Error initializing WebSocket:', error);
+    }
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
@@ -254,6 +258,9 @@ export class CheckoutComponent implements OnInit {
 
         },
     };
+}
+ngOnDestroy(): void {
+  this.webSocketService.closeWebSocket();
 }
 
 }
